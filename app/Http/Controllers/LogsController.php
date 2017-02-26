@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\LogRepositoryInterface;
-use App\Transformers\LogEntryTransformer;
 
 class LogsController extends Controller
 {
@@ -23,6 +22,11 @@ class LogsController extends Controller
         $this->logs = $logs;
     }
 
+    /**
+     * Return a view with a transformed list of all logs in storage
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $data = $this->logs->all();
@@ -31,6 +35,14 @@ class LogsController extends Controller
             ->with('logs', $data);
     }
 
+    /**
+     * Return transformed data for a single log entry
+     * @TODO - create a show view
+     *
+     * @param $id
+     *
+     * @return mixed
+     */
     public function show($id)
     {
         $data = $this->logs->find($id);
