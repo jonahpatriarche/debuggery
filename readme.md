@@ -1,40 +1,48 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# Welcome to the Debuggery wiki!
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+This project was designed to showcase my backend skills and to start experimenting with VueJS and Bulma.
+Project design started Feb 26th, 2017.
 
-## About Laravel
+## The Concept 
+Have you ever found yourself thinking "I've seen this error before! How the hell did I fix it?" I certainly have. Do you find standard stack traces and error log files a pain to sift through? Yes. Me too. I decided to combine a human-readable error logging tool (Buggers) with my obsessive record-keeping tendencies (Trackers).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+### Buggers ###
+When complete, the user will be able to go to a /buggers route and see a nice, human-readable summary of errors logged during their development efforts. This will display a nice list of error logs, which will be filterable by the log level (error, warning, info, etc). Use cases:
+* Click 'x' to delete a log entry
+* Click the log (or a button or something) to see more details
+* From details, you have the option to dismiss the log or start a tracker entry
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Trackers ###
+Trackers are essentially a list of steps you took to try to fix the bug along with the original error log and some other useful info about your bug-fixing effort. From a particular log entry, you create a new tracker with a form with:
+* name
+* checklist of standard bug-fixing steps from my standard workflow (things like dumping autoload, clearing caches, updating composer, etc)
+* optional screenshot upload
+* optional input for configuration variables
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+When you try a new fix, you make a quick entry in your tracker with: 
+* description of the step. ex: "Checked MySQL was running"
+* links to any docs or web articles you consulted (ex: stack overflow)
+* optional screenshot upload
+* checkmark to indicate if the step fixed the issue
+* [down the road] dropdown list to select an error log that was caused by your fix
 
-## Learning Laravel
+***
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+## Hooray! You fixed the Bug! Is that it? ##
+### No! ###
+After you've marked a Tracker as 'resolved', it is archived. Whenever any new errors are logged, Debuggery will search through the resolved trackers to see if you've solved a similar problem and link to any trackers that might help you figure out what's going on.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+***
 
-## Contributing
+## So Where's the Project At? ##
+### Buggers ###
+* Wrote the custom exception logger and migrations to record error logs to DB
+* Implemented Model, Controller, Repositories, and Transformers
+* Controller returns transformed Bugger data to a basic Blade template view that is styled with Bootstrap
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+#### Tangent! ####
+* Reimplemented a new controller to behave as a backend API that sends JSON data to the front-end
+* reimplemented view to use VueJS, and styled it with Bulma
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+### Trackers ###
+* migration and Controllers
