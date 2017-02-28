@@ -1,7 +1,7 @@
-# Welcome to the Debuggery wiki!
+# Welcome to the Debuggery!
 
-This project was designed to showcase my backend skills and to start experimenting with VueJS and Bulma.
-Project design started Feb 26th, 2017.
+This project was designed to build my portfolio a bit, and to start experimenting with VueJS and Bulma.
+Project design started Feb 26th, 2017 and is ongoing
 
 ## The Concept 
 Have you ever found yourself thinking "I've seen this error before! How the hell did I fix it?" I certainly have. Do you find standard stack traces and error log files a pain to sift through? Yes. Me too. I decided to combine a human-readable error logging tool (Buggers) with my obsessive record-keeping tendencies (Trackers).
