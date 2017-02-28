@@ -15,8 +15,8 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\\Repositories\\LogRepositoryInterface',
-            'App\\Repositories\\LogRepository'
+            'App\\Repositories\\BuggerRepositoryInterface',
+            'App\\Repositories\\BuggerRepository'
         );
     }
 }

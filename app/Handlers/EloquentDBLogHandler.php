@@ -2,7 +2,7 @@
 
 namespace App\Handlers;
 
-use App\LogEntry;
+use App\Bugger;
 use Monolog\Formatter\HtmlFormatter;
 use Monolog\Handler\AbstractProcessingHandler;
 
@@ -19,7 +19,7 @@ class EloquentDBLogHandler extends AbstractProcessingHandler {
     protected function write(array $record)
     {
         try {
-            $log = LogEntry::create($record);
+            $bugger = Bugger::create($record);
 
         }
         catch (\Exception $e) {

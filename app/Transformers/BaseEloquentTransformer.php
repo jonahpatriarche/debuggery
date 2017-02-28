@@ -26,11 +26,11 @@ abstract class BaseEloquentTransformer
     public function transform($data)
     {
         if ($data instanceof Collection) {
-            $this->response['data'] = $this->transformCollection($data->all());
+            $this->response = $this->transformCollection($data->all());
         }
 
         elseif (is_array($data)) {
-            $this->response['data'] = $data;
+            $this->response = $data;
         }
 
         elseif ($data instanceof Model) {
