@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('logs', 'LogsController@index')->name('logs.index');
+Route::get('buggers', 'BuggersController@index')->name('buggers.index');
+Route::get('buggers/{id}', 'BuggersController@show')->name('buggers.show');
+
+Route::resource('trackers', 'TrackersController');
 /*Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');*/
 

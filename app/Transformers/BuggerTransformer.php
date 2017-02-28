@@ -2,11 +2,14 @@
 
 namespace App\Transformers;
 
-class LogEntryTransformer extends BaseEloquentTransformer implements TransformerInterface
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
+class BuggerTransformer extends BaseEloquentTransformer implements TransformerInterface
 {
 
     /**
-     * Transform log item
+     * Transform bugger item
      *
      * @param array $item
      *
@@ -34,11 +37,10 @@ class LogEntryTransformer extends BaseEloquentTransformer implements Transformer
             'message'     => $error,
             'file'        => $file,
             'trace'       => $trace,
-            'level_name'  => $item['level_name'],
-            'level_image' => is_object($item) ? $item->levelImage() : 'question-sign',
-            'log_id'      => $item['log_id'],
-            'bugger_id'   => $item['bugger_id'],
-            'date'        => $item['created_at'],
+            'level_name'  => strtolower($item['level_name']),
+            'level_icon'  => is_object($item) ? $item->levelImage() : 'fa fa-warning',
+            'bugger_id'   => $item['id'],
+            'date'        => $this->transformDateString($item),
             'context'     => $item['context']
         ];
 
@@ -102,5 +104,21 @@ class LogEntryTransformer extends BaseEloquentTransformer implements Transformer
         }
 
         return $trace;
+    }
+
+    /**
+     * Parses date into a readable string in the user's timezone (or PST if no user)
+     *
+     * @param $item
+     *
+     * @return string
+     */
+    private function transformDateString($item)
+    {
+        $timezone = Auth::check() ? Auth::user()->timezone : 'PST';
+
+        return Carbon::parse($item['created_at'])
+            ->timezone($timezone)
+            ->toDayDateTimeString();
     }
 }
