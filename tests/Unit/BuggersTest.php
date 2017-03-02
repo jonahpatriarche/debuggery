@@ -15,7 +15,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
  */
 class BuggersTest extends TestCase
 {
-    use DatabaseMigrations, DatabaseTransactions;
+    use DatabaseTransactions;
 
     /**
      * Test emergency-level bugger creation
