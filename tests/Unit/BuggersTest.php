@@ -17,7 +17,6 @@ class BuggersTest extends TestCase
 {
     use DatabaseMigrations, DatabaseTransactions;
 
-
     /**
      * Test emergency-level bugger creation
      * @test
@@ -27,13 +26,12 @@ class BuggersTest extends TestCase
         /** * * * *
          * SETUP  *
          * * * * **/
-
-        // None required
+        Log::emergency('EmergencyTest');
 
         /** * * *
          * ACT  *
          * * * **/
-        Log::emergency('EmergencyTest');
+        // No action required
 
         /** * * *
          * TEST *
@@ -54,13 +52,12 @@ class BuggersTest extends TestCase
         /** * * * *
          * SETUP  *
          * * * * **/
-
-        // None required
+        Log::alert('AlertTest');
 
         /** * * *
          * ACT  *
          * * * **/
-        Log::alert('AlertTest');
+        // No action required
 
         /** * * *
          * TEST *
@@ -80,13 +77,12 @@ class BuggersTest extends TestCase
         /** * * * *
          * SETUP  *
          * * * * **/
-
-        // None required
+        Log::critical('CriticalTest');
 
         /** * * *
          * ACT  *
          * * * **/
-        Log::critical('CriticalTest');
+        // No action required
 
         /** * * *
          * TEST *
@@ -106,13 +102,12 @@ class BuggersTest extends TestCase
         /** * * * *
          * SETUP  *
          * * * * **/
-
-        // None required
+        Log::error('ErrorTest');
 
         /** * * *
          * ACT  *
          * * * **/
-        Log::error('ErrorTest');
+        // No action required
 
         /** * * *
          * TEST *
@@ -132,13 +127,12 @@ class BuggersTest extends TestCase
         /** * * * *
          * SETUP  *
          * * * * **/
-
-        // None required
+        Log::warning('WarningTest');
 
         /** * * *
          * ACT  *
          * * * **/
-        Log::warning('WarningTest');
+        // No action required
 
         /** * * *
          * TEST *
@@ -158,13 +152,12 @@ class BuggersTest extends TestCase
         /** * * * *
          * SETUP  *
          * * * * **/
-
-        // None required
+        Log::notice('NoticeTest');
 
         /** * * *
          * ACT  *
          * * * **/
-        Log::notice('NoticeTest');
+        // No action required
 
         /** * * *
          * TEST *
@@ -184,13 +177,12 @@ class BuggersTest extends TestCase
         /** * * * *
          * SETUP  *
          * * * * **/
-
-        // None required
+        Log::info('InfoTest');
 
         /** * * *
          * ACT  *
          * * * **/
-        Log::info('InfoTest');
+        // No action required
 
         /** * * *
          * TEST *

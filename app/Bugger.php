@@ -37,7 +37,7 @@ class Bugger extends Model
             case "WARNING":
                 return 'fa fa-bug';
                 break;
-            case "ERROR ":
+            case "ERROR":
                 return 'fa fa-bug';
                 break;
             case "CRITICAL":
