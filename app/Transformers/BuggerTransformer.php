@@ -19,17 +19,51 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
     {
         $str = $item['message'];
 
-        list($error, $trace_string) = explode('Stack trace:', $str);
-        list($msg, $file) = explode(' in ', $error);
-        list($class, $error) = explode(':', $msg);
-        $trace_lines = explode('#', $trace_string);
+        /**
+         * Check for stack trace
+         */
+        if (str_contains($str, 'Stack trace')) {
+            list($error, $trace_string) = explode('Stack trace:', $str);
+            $trace_lines = explode('#', $trace_string);
+            $trace = $this->transformTrace($trace_lines);
+        }
+        else {
+            $error = $str;
+            $trace = [];
+        }
 
-        $trace = $this->transformTrace($trace_lines);
+        /**
+         * Check for file name
+         *  ex: 'DeveloperException in app/BadCode.php(22)...'
+         */
+        if (str_contains($error, ' in ')) {
+            list($msg, $file) = explode(' in ', $error);
+        }
+        else {
+            $msg = $error;
+            $file = null;
+        }
 
-        // Extract the name of the class from the error path
+        /**
+         * Check for Error class
+         *  ex: 'BadMethodCallException: blah blah something blew up blah blah blah...'
+         */
+        if (str_contains($msg, ':')) {
+            list($class, $error) = explode(':', $msg);
+        }
+        else {
+            $class = 'Unknown';
+            $error = $msg;
+        }
+
+        /**
+         * Extract the name of the class from the end of the error path
+         */
         $class = last(explode('\\', $class));
 
-        // Strip the base path off of the file name
+        /**
+         * Strip the base path off of the file name
+         **/
         $file = $this->stripBasePath($file);
 
         $response = [
@@ -48,8 +82,7 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
     }
 
     /**
-     * Remove first instance of base path from string or array of strings and trim the resulting string
-     *  - NOTE: any characters that precede the base path will be lost
+     * Remove base path from string or array of strings and trim the result
      *
      * @param string|array $path
      *
@@ -57,6 +90,9 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
      */
     private function stripBasePath($path)
     {
+        /**
+         * When given array of string, check each for base path and call this method recursively
+         */
         if (is_array($path)) {
             $array = [];
             foreach ($path as $value) {
@@ -75,15 +111,23 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
             return $array;
         }
 
+        /**
+         * Remove instances of base path from the error message
+         * - explode string around base path
+         * - remove base path
+         * - stick string back together
+         */
         if (str_contains($path, base_path())) {
-            return last(explode(base_path(), $path));
+            $str_array = explode(base_path(), $path);
+            array_forget($str_array, base_path());
+            $path = implode($str_array);
         }
 
         return $path;
     }
 
     /**
-     * Use delimited to split lines of trace into arrays of trimmed strings
+     * Use delimiter to split lines of trace into arrays of trimmed strings
      *
      * @param $trace_lines
      *
