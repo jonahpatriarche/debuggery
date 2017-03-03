@@ -4,8 +4,6 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-/*require('./bootstrap');*/
-
 Vue.component('bugger', {
     props: ['error', 'message', 'icon', 'date', 'link'],
     template: `
