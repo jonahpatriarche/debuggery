@@ -18,16 +18,14 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
     public function item($item)
     {
         $log_message = $item['message'];
-
+        $log_message = $this->stripBasePath($log_message);
         list($message, $trace) = $this->getStackTrace($log_message);
         list($error_message, $file) = $this->getErrorFile($message);
         list($err_msg_class, $err_msg_body) = $this->getErrorClassName($error_message);
 
-
-        /**
-         * Extract the name of the class from the end of the error path
-         */
-        $err_msg_class = last(explode('\\', $err_msg_class));
+        if ($err_msg_class === null) {
+            $err_msg_class = title_case($item['level_name']);
+        }
 
         /**
          * Strip the base path off of the file name
@@ -70,7 +68,7 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
 
     /**
      * Split the error class from the error message body using ': ' as delimiter
-     *  - if delimiter not present, set both class and msg to the whole message
+     *  - if delimiter not present, set class to null
      *
      * @param $message - 'BadMethodCallException: blah blah something blew up blah blah blah...'
      *
@@ -80,13 +78,16 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
     {
         if (str_contains($message, $delimiter)) {
             list($err_msg_class, $err_msg_body) = explode($delimiter, $message);
+
+            $err_msg_class = last(explode('/', $err_msg_class));
+            $err_msg_class = last(explode('\\', $err_msg_class));
         }
         else {
-            $err_msg_class = $message;
+            $err_msg_class = null;
             $err_msg_body  = $message;
         }
 
-        return [$err_msg_class, $err_msg_body];
+        return [trim($err_msg_class, '/\ '), trim($err_msg_body, '/\ ')];
     }
 
     /**
@@ -94,7 +95,7 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
      *  - trace is returned as an array of strings that represent each line of the stack trace
      *  - if delimiter not present, use the entire log message and set trace to empty array
      */
-    private function getStackTrace($log_message, $delimiter = 'Stack trace: ')
+    private function getStackTrace($log_message, $delimiter = 'Stack trace:')
     {
         if (str_contains($log_message, $delimiter)) {
             list($message, $trace_string) = explode($delimiter, $log_message);
@@ -128,7 +129,7 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
                     $value = $this->stripBasePath($value);
                 }
 
-                $value = trim($value);
+                $value = trim($value, '/\ ');
 
                 if ($value != "") {
                     array_push($array, $value);
@@ -149,7 +150,7 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
         if (str_contains($path, base_path())) {
             $str_array = explode(base_path(), $path);
             array_forget($str_array, base_path());
-            $path = rtrim(implode($str_array), ' ');
+            $path = trim(implode($str_array), '/\ ');
         }
 
         return $path;
