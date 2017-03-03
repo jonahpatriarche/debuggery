@@ -17,20 +17,18 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
      */
     public function item($item)
     {
-        $log_message = $item['message'];
-        $log_message = $this->stripBasePath($log_message);
+        $log_message = $this->stripBasePath($item['message']);
+
         list($message, $trace) = $this->getStackTrace($log_message);
         list($error_message, $file) = $this->getErrorFile($message);
-        list($err_msg_class, $err_msg_body) = $this->getErrorClassName($error_message);
 
-        if ($err_msg_class === null) {
+        if ($error_message === nullOrEmptyString()) {
             $err_msg_class = title_case($item['level_name']);
+            $err_msg_body = 'An unspecified ' . strtolower($item['level_name']) . ' was logged';
         }
-
-        /**
-         * Strip the base path off of the file name
-         **/
-        $file = $this->stripBasePath($file);
+        else {
+            list($err_msg_class, $err_msg_body) = $this->getErrorClassName($error_message);
+        }
 
         $response = [
             'error_class' => $err_msg_class,
@@ -38,7 +36,7 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
             'file'        => $file,
             'trace'       => $trace,
             'level_name'  => strtolower($item['level_name']),
-            'level_icon'  => is_object($item) ? $item->levelImage() : 'fa fa-warning',
+            'level_icon'  => is_object($item) ? $item->getLevelIcon() : 'fa fa-warning',
             'bugger_id'   => $item['id'],
             'date'        => $this->transformDateString($item),
             'context'     => $item['context']
@@ -57,6 +55,7 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
     {
         if (str_contains($message, $delimiter)) {
             list($error_message, $file) = explode($delimiter, $message);
+            $file = trim($file, '/\ ');
         }
         else {
             $error_message = $message;
@@ -83,11 +82,11 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
             $err_msg_class = last(explode('\\', $err_msg_class));
         }
         else {
-            $err_msg_class = null;
+            $err_msg_class = $message;
             $err_msg_body  = $message;
         }
 
-        return [trim($err_msg_class, '/\ '), trim($err_msg_body, '/\ ')];
+        return [trim($err_msg_class), trim($err_msg_body, '/\ ')];
     }
 
     /**
