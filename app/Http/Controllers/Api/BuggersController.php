@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Repositories\BuggerRepositoryInterface;
 use App\Transformers\BuggerTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Illuminate\Http\Response as HTTP;
 
 class BuggersController extends APIController

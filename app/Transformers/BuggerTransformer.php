@@ -55,7 +55,7 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
     {
         if (str_contains($message, $delimiter)) {
             list($error_message, $file) = explode($delimiter, $message);
-            $file = trim($file, '/\ ');
+            $file = trim($file, '\/');
         }
         else {
             $error_message = $message;
@@ -86,7 +86,7 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
             $err_msg_body  = $message;
         }
 
-        return [trim($err_msg_class), trim($err_msg_body, '/\ ')];
+        return [trim($err_msg_class), trim($err_msg_body, '\/')];
     }
 
     /**
@@ -128,7 +128,7 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
                     $value = $this->stripBasePath($value);
                 }
 
-                $value = trim($value, '/\ ');
+                $value = trim($value, '\/');
 
                 if ($value != "") {
                     array_push($array, $value);
@@ -186,9 +186,11 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
         $trace = [];
         foreach ($trace_lines as $line) {
             $line = $this->stripBasePath($line);
+            $line = ltrim($line, "0...9 "); //remove the trace line number from beginning of line
+            $line = trim($line);
 
             // Skip empty arrays and empty strings
-            if (sizeof($line) > 0) {
+            if ($line !== "") {
                 array_push($trace, $line);
             }
 

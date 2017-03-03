@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Repositories\BuggerRepositoryInterface;
 use App\Transformers\BuggerTransformer;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Illuminate\Http\Response as HTTP;
 
 class BuggersController extends Controller
 {
@@ -52,8 +50,9 @@ class BuggersController extends Controller
     public function show($id)
     {
         $data = $this->buggers->find($id);
+        $bugger = $this->transformer->transform($data);
 
         return view('buggers.show')
-            ->with('bugger', $data);
+            ->with('bugger', $bugger);
     }
 }
