@@ -23,7 +23,7 @@ class EloquentDBLogHandler extends AbstractProcessingHandler {
 
         }
         catch (\Exception $e) {
-            dump('errors recording errors are never good.');
+            dump('An error occurred while logging an error. That\'s not good...');
         }
 
 

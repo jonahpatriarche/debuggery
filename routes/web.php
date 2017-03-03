@@ -18,6 +18,8 @@ Route::get('/', function () {
 Route::get('buggers', 'BuggersController@index')->name('buggers.index');
 Route::get('buggers/{id}', 'BuggersController@show')->name('buggers.show');
 
-Route::resource('trackers', 'TrackersController');
+// Bugger model is bound in RouteServiceProvider, so Laravel will automatically inject the Bugger with the given id
+Route::get('trackers/{bugger}/create')->name('trackers.create');
+
 /*Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');*/
 

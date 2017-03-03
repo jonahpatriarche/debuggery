@@ -22,6 +22,7 @@ class CreateBuggersTable extends Migration
             $table->string('extra')->nullable();
             $table->text('formatted');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
