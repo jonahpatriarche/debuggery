@@ -18,6 +18,10 @@ class CreateTrackersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
+            $table->string('error_name');
+            $table->string('error_file');
+            $table->string('error_date');
+            $table->text('error_raw');
             $table->boolean('resolved');
         });
     }
