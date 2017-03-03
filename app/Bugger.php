@@ -22,7 +22,7 @@ class Bugger extends Model
         return $this->hasOne(Tracker::class);
     }
 
-    public function levelImage()
+    public function getLevelIcon()
     {
         switch ($this->level_name) {
             case "DEBUG":
