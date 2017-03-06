@@ -30,41 +30,120 @@ html, body {
 .panel-tabs a {
     color: #2e6da4;
 }
+/*******************************************************
+ ********************* LOG LEVELS **********************
+ **                                                   **
+ **     Style components according to log level       **
+ **                                                   **
+ *******************************************************
+ *******************************************************/
 
-/********************* LOG LEVELS **********************/
-.debug {
-    color: #00d1b2
+.log-header {
+
 }
 
-.info {
-    color: #00d1b2
+
+.log-body {
+
 }
 
-.notice {
-    color: #23d160
+.debug .log-header {
+    background-color: #3273dc;
+    border-color: #3273dc;
+    color: white;
 }
 
-.warning i, strong {
-    color: #ffdd57;
+.debug .log-body {
+    border-color: #3273dc;
+    color: #22509a;
 }
 
-.error i, strong {
-    color: #ff3860;
+.info .log-header {
+    background-color: #23d160;
+    border-color: #23d160;
+    color: white;
 }
 
-.critical {
-    color: #b40d08;
-    background-color: #f97484;
+.info .log-body {
+    border-color: #23d160;
+    color: #0e301a;
 }
 
-.alert {
-    color: #b40d08;
-    background-color: #f97484;
+.notice .log-header {
+    background-color: #23d160;
+    color: white;
 }
 
-.emergency {
-    color: #b40d08;
-    background-color: #f97484;
+.notice .log-body {
+    border-color: #23d160;
+    color: #0e301a;
+}
+
+.notice .error-name {
+    font-weight: 600;
+}
+
+.warning .log-header {
+    background-color: #ffdd57;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.warning .log-body {
+}
+
+
+.error .log-header {
+    background-color: #ffdd57;
+    color: rgba(0, 0, 0, 0.7);
+
+}
+
+.error .log-body {
+    border-color: #ffdd57;
+    background-color: #fffdf5;
+    color: #3b3108;
+}
+
+.error .error-name {
+    font-weight: 600;
+}
+
+.critical .log-header {
+    background-color: #b40d08;
+    color: white;
+}
+
+.critical .log-body {
+    border-color: #ffdd57;
+    color: #3b3108;
+}
+
+.critical .error-name {
+    font-weight: 600;
+}
+
+.alert .log-header {
+    background-color: #b40d08;
+    color: white;
+}
+
+.alert .log-body {
+}
+
+.alert .error-name {
+    font-weight: 600;
+}
+
+.emergency .log-header {
+    background-color: #b40d08;
+    color: white;
+}
+
+.emergency .log-body {
+}
+
+.emergency .error-name {
+    font-weight: 900;
 }
 
 .is-primary i {

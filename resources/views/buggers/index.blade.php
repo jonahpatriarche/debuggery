@@ -26,8 +26,8 @@
                     <div class="content">
                         <div class="level">
                             <div class="level-left">
-                                <div class="level-item">
-                                    <strong>{{ $bugger['error_class'] }}</strong>
+                                <div class="level-item error-name">
+                                    {{ $bugger['error_class'] }}
                                 </div>
                                 <div class="level-item">
                                     <small>{{ $bugger['file'] }}</small>
