@@ -1,19 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-    <article class="message is-info">
-        <div class="message-header">
+    <div class="{{ $bugger['level_name'] }}">
+        <article class="message">
+            <div class="message-header log-header">
             <div class="level">
                 <div class="level-left">
-                    <span class="icon"><i class="{{ $bugger['level_icon'] }}"></i></span>
-                    <strong>{{ $bugger['error_class'] }}</strong>
+                    <div class="level-item">
+                        <span class="icon level-icon"><i class="{{ $bugger['level_icon'] }}"></i></span>
+                    </div>
+                    <div class="level-item error-name">
+                        {{ $bugger['error_class'] }}
+                    </div>
                 </div>
                 <div class="level-right">
-                    <button class="delete"></button>
+                    <div class="level-item">
+                        <small>{{ $bugger['date'] }}</small>
+                    </div>
+                    <div class="level-item">
+                        <button class="delete"></button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="message-body">
+            <div class="message-body log-body">
             <div class="level">
                 <div class="level-left">
                     <div class="level-item">
@@ -29,6 +39,10 @@
                 </div><!-- level-right -->
             </div><!-- level -->
             <br>
+
+                {{-------------------------------------------------------}}
+                {{-------------------- TRACE TABLE ----------------------}}
+                {{-------------------------------------------------------}}
             @if(sizeof($bugger['trace']) > 0)
                 <table class="table is-narrow">
                     <thead>
@@ -38,6 +52,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                    {{--If file is given, start trace table with file name--}}
+                    @if($bugger['file'] !== null && $bugger['file'] !== "")
+                        <tr>
+                            <th>0</th>
+                            <td>{{ $bugger['file'] }}</td>
+                        </tr>
+                    @endif
                     @foreach($bugger['trace'] as $line)
                         <tr>
                             <th>{{ $loop->index + 1 }}</th>
@@ -47,7 +68,7 @@
                     </tbody>
                 </table>
             @endif
-            <small>{{ $bugger['date'] }}</small>
         </div><!-- message-body -->
     </article>
+    </div>
 @endsection
