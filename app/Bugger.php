@@ -10,7 +10,7 @@ class Bugger extends Model
     public $table = 'buggers';
 
     public $fillable = ['message', 'level', 'level_name', 'formatted'];
-    public $guarded = ['extra', 'context'];
+    public $guarded = ['extra', 'context', 'channel'];
 
     /**
      * Define the relationship between LogEntry and Bugger

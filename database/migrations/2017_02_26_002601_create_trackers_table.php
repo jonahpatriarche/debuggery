@@ -16,13 +16,16 @@ class CreateTrackersTable extends Migration
     {
         Schema::create('trackers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('bugger_id')->unsigned();
             $table->string('name');
-            $table->string('description');
-            $table->string('error_name');
-            $table->string('error_file');
-            $table->string('error_date');
-            $table->text('error_raw');
-            $table->boolean('resolved');
+            $table->string('description')->nullable();
+            $table->boolean('active')->default(true);
+            $table->boolean('resolved')->default(false);
+            $table->timestamps();
+
+            $table->foreign('bugger_id')
+                ->references('id')
+                ->on('buggers');
         });
     }
 
@@ -33,6 +36,7 @@ class CreateTrackersTable extends Migration
      */
     public function down()
     {
+        Schema::dropForeign('trackers_bugger_id_foreign');
         Schema::dropIfExists('trackers');
     }
 }
