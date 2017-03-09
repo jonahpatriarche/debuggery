@@ -46,6 +46,51 @@ class TrackersTest extends BrowserKitTestCase
         $this->seeInDatabase('trackers', ['name'=>'New Tracker', 'bugger_id' => $bugger_id]);
     }
 
+    /**
+     * @test
+     */
+    public function it_redirects_with_errors_if_invalid_bugger_id_used_to_create_tracker()
+    {
+        /** * * * *
+         * SETUP  *
+         * * * * **/
+        $input = ['name' => 'Test tracker'];
+
+        /** * * *
+         * ACT  *
+         * * * **/
+        $this->post(route('trackers.store', ['bugger_id' => 666]), $input);
+
+        /** * * *
+         * TEST *
+         * * * **/
+        $this->assertSessionHasErrors('bugger_id');
+        $this->assertRedirectedTo('/');
+    }
+
+    /**
+     * @test
+     */
+    public function it_redirects_with_errors_if_deleted_bugger_id_used_to_create_tracker()
+    {
+        /** * * * *
+         * SETUP  *
+         * * * * **/
+        $input = ['name' => 'Test tracker'];
+        $bugger = factory(Bugger::class)->create();
+        $bugger->delete();
+
+        /** * * *
+         * ACT  *
+         * * * **/
+        $this->post(route('trackers.store', ['bugger_id' => $bugger->id]), $input);
+
+        /** * * *
+         * TEST *
+         * * * **/
+        $this->assertSessionHasErrors('bugger_id');
+        $this->assertRedirectedTo('/');
+    }
 
     /**
      * @test

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bugger;
+use App\Http\Requests\TrackerStoreRequest;
 use App\Repositories\TrackerRepositoryInterface;
 use App\Tracker;
 use App\Transformers\TrackerTransformer;
@@ -60,7 +61,7 @@ class TrackersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TrackerStoreRequest $request)
     {
         $tracker = $this->trackers->save();
 
