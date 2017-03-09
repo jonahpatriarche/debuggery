@@ -38,7 +38,10 @@ class CreateTrackerStepsTable extends Migration
      */
     public function down()
     {
-        Schema::dropForeign('tracker_steps_tracker_id_foreign');
+        Schema::table('tracker_steps', function (Blueprint $table) {
+            $table->dropForeign('tracker_steps_tracker_id_foreign');
+        });
+
         Schema::dropIfExists('tracker_steps');
     }
 }

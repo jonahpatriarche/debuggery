@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tracker extends Model
 {
     public $table = 'trackers';
+    public $fillable = ['name', 'bugger_id'];
 
     /**
      * Define relationship to bugger model

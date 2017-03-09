@@ -3,11 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Bugger;
+use App\Repositories\TrackerRepositoryInterface;
 use App\Tracker;
+use App\Transformers\TrackerTransformer;
 use Illuminate\Http\Request;
 
 class TrackersController extends Controller
 {
+
+    /**
+     * @var \App\Repositories\TrackerRepositoryInterface
+     */
+    private $trackers;
+
+    /**
+     * TrackersController constructor.
+     *
+     * @param \App\Repositories\TrackerRepositoryInterface $trackers
+     * @param \App\Transformers\TrackerTransformer         $transformer
+     */
+    public function __construct(TrackerRepositoryInterface $trackers, TrackerTransformer $transformer)
+    {
+        $this->trackers = $trackers;
+        $this->transformer = $transformer;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,11 +43,13 @@ class TrackersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create( )
+    public function create($bugger_id)
     {
         $tracker = new Tracker();
 
-        return view('trackers.create')->with('tracker', $tracker);
+        return view('trackers.create')
+            ->with('bugger_id', $bugger_id)
+            ->with('tracker', $tracker);
     }
 
     /**
@@ -38,7 +60,9 @@ class TrackersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tracker = $this->trackers->save();
+
+        return $this->transformer->transform($tracker);
     }
 
     /**

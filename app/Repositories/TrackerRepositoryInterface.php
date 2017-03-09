@@ -25,4 +25,6 @@ interface TrackerRepositoryInterface
      * @return mixed
      */
     public function delete($id);
+
+    public function save();
 }

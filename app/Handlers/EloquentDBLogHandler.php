@@ -25,8 +25,6 @@ class EloquentDBLogHandler extends AbstractProcessingHandler {
         catch (\Exception $e) {
             dump($e->getMessage());
         }
-
-
     }
 
     protected function getDefaultFormatter()
