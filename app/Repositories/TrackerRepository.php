@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Bugger;
 use App\Tracker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +25,7 @@ class TrackerRepository extends RepositoryAbstract implements TrackerRepositoryI
     public function all()
     {
         return Tracker::with('steps')
-            ->all();
+            ->get();
     }
 
     /**
@@ -37,11 +36,15 @@ class TrackerRepository extends RepositoryAbstract implements TrackerRepositoryI
     public function find($id)
     {
         return Tracker::with('steps')
-            ->findOrFail($id);
+            ->where('bugger_id', $id)
+            ->firstOrFail();
     }
 
     /**
      * Save and return a new Tracker model
+     *
+     *   - after tracker is created, soft-delete the associated Bugger model
+     *     so that it no longer appears in the bugger list
      *
      * @return \App\Tracker
      * @throws \Exception
@@ -51,8 +54,9 @@ class TrackerRepository extends RepositoryAbstract implements TrackerRepositoryI
         DB::beginTransaction();
 
         try {
-            $input   = array_except($this->request->input(), ['_token', '_method']);
+            $input   = $this->request->input();
             $tracker = Tracker::create($input);
+            $tracker->bugger->delete();
         }
         catch(\Exception $e) {
             DB::rollback();

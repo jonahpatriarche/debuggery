@@ -35,7 +35,9 @@ class TrackersController extends Controller
      */
     public function index()
     {
-        //
+        $trackers = $this->trackers->all();
+
+        return $this->transformer->transform($trackers);
     }
 
     /**
@@ -68,12 +70,12 @@ class TrackersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Tracker $tracker
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Tracker $tracker)
     {
-        //
+        return $this->transformer->transform($tracker);
     }
 
     /**

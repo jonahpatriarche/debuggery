@@ -17,7 +17,15 @@ class TrackerTransformer extends BaseEloquentTransformer implements TransformerI
      */
     public function item($item)
     {
-        $response = $item;
+        $response = [
+            'name'        => $item['name'],
+            'description' => $item['description'],
+            'bugger_id'   => $item['bugger_id'],
+            'is_active'   => $item['is_active'],
+            'is_resolved' => $item['is_resolved'],
+            'created_at'  => $this->transformDateString($item['created_at']),
+            'updated_at'  => $this->transformDateString($item['updated_at'])
+        ];
 
         return $response;
     }

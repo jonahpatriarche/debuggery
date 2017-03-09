@@ -27,7 +27,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::model('bugger', Bugger::class);
         Route::bind('tracker', function ($value) {
-            return Tracker::with('steps')->find($value);
+            return Tracker::with('steps')->where('bugger_id', $value)->first();
         });
 
         parent::boot();
