@@ -31,3 +31,5 @@ When you try a new fix, you make a quick entry in your tracker with:
 ### No! ###
 After you've marked a Tracker as 'resolved', it will be archived. Whenever any new errors are logged, Debuggery will search through the resolved trackers to see if you've solved a similar problem and link to any trackers that might help you figure out what's going on.
 ***
+
+I have no projected completion date - my work schedule is currently a bit unpredictable.
