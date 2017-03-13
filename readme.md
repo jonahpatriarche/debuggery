@@ -1,8 +1,6 @@
 # Welcome to the Debuggery!
 
-This project was designed to build my portfolio a bit, and to start experimenting with VueJS and Bulma. I will probably convert it into a Laravel package when it's ready to be released into the world. <br>
-
-Project design started Feb 26th, 2017 and is ongoing
+This project is very much off-the-corner-of-my-desk. I wanted to start experimenting with VueJS and Bulma, and I also thought it would be nice to have some of my work in a public repo. I will probably convert the project into a Laravel package when it's ready to be released into the world. <br>
 
 ## The Concept 
 Have you ever found yourself thinking "I've seen this error before! How the hell did I fix it?" I certainly have. Do you find standard stack traces and error log files a pain to sift through? Yes. Me too. I decided to combine a human-readable error logging tool (Buggers) with my obsessive record-keeping tendencies (Trackers).
@@ -31,19 +29,5 @@ When you try a new fix, you make a quick entry in your tracker with:
 
 ## Hooray! You fixed the Bug! Is that it? ##
 ### No! ###
-After you've marked a Tracker as 'resolved', it is archived. Whenever any new errors are logged, Debuggery will search through the resolved trackers to see if you've solved a similar problem and link to any trackers that might help you figure out what's going on.
-
+After you've marked a Tracker as 'resolved', it will be archived. Whenever any new errors are logged, Debuggery will search through the resolved trackers to see if you've solved a similar problem and link to any trackers that might help you figure out what's going on.
 ***
-
-## So Where's the Project At? ##
-### Buggers ###
-* Wrote the custom exception logger and migrations to record error logs to DB
-* Implemented Model, Controller, Repositories, and Transformers
-* Controller returns transformed Bugger data to a basic Blade template view that is styled with Bootstrap
-
-#### Tangent! ####
-* Reimplemented a new controller to behave as a backend API that sends JSON data to the front-end
-* reimplemented view to use VueJS, and styled it with Bulma
-
-### Trackers ###
-* migration and Controllers
