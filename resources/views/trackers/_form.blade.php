@@ -32,6 +32,7 @@
             </label>
         </p>
     @endif
+
     <div class="control is-grouped">
         <p class="control">
             <button class="button is-primary">Submit</button>
