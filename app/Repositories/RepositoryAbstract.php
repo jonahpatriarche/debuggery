@@ -21,6 +21,5 @@ abstract class RepositoryAbstract
     public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->setLimit();
     }
 }

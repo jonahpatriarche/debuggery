@@ -38,7 +38,7 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
             'level_name'  => strtolower($item['level_name']),
             'level_icon'  => is_object($item) ? $item->getLevelIcon() : 'fa fa-warning',
             'bugger_id'   => $item['id'],
-            'date'        => $this->transformDateString($item),
+            'date'        => $this->transformDateString($item['created_at']),
             'context'     => $item['context']
         ];
 
@@ -155,21 +155,6 @@ class BuggerTransformer extends BaseEloquentTransformer implements TransformerIn
         return $path;
     }
 
-    /**
-     * Parses date into a readable string in the user's timezone (or PST if no user)
-     *
-     * @param $item
-     *
-     * @return string
-     */
-    private function transformDateString($item)
-    {
-        $timezone = Auth::check() ? Auth::user()->timezone : 'PST';
-
-        return Carbon::parse($item['created_at'])
-            ->timezone($timezone)
-            ->toDayDateTimeString();
-    }
 
     /**
      * Tidy up lines of stack trace

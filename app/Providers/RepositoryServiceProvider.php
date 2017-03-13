@@ -18,5 +18,10 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\\Repositories\\BuggerRepositoryInterface',
             'App\\Repositories\\BuggerRepository'
         );
+
+        $this->app->bind(
+            'App\\Repositories\\TrackerRepositoryInterface',
+            'App\\Repositories\\TrackerRepository'
+        );
     }
 }

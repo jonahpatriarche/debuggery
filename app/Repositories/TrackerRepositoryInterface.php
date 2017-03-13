@@ -2,22 +2,15 @@
 
 namespace App\Repositories;
 
-interface LogRepositoryInterface
+interface TrackerRepositoryInterface
 {
 
     /**
-     * Return a collection of all logs in storage
+     * Return a collection of all trackers in storage
      *
      * @return mixed
      */
     public function all();
-
-    /**
-     * Save a new log file in storage
-     *
-     * @return mixed
-     */
-    public function upload();
 
     /**
      * @param $id
@@ -32,4 +25,6 @@ interface LogRepositoryInterface
      * @return mixed
      */
     public function delete($id);
+
+    public function save();
 }

@@ -3,8 +3,10 @@
 namespace App\Transformers;
 
 use App\Exceptions\TransformationException;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 abstract class BaseEloquentTransformer
 {
@@ -65,5 +67,21 @@ abstract class BaseEloquentTransformer
      * @return array
      */
     abstract public function item($item);
+
+    /**
+     * Parses date into a readable string in the user's timezone (or PST if no user)
+     *
+     * @param string $date
+     *
+     * @return string
+     */
+    protected function transformDateString($date)
+    {
+        $timezone = Auth::check() ? Auth::user()->timezone : 'PST';
+
+        return Carbon::parse($date)
+            ->timezone($timezone)
+            ->toDayDateTimeString();
+    }
 
 }

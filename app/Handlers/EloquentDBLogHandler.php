@@ -4,6 +4,7 @@ namespace App\Handlers;
 
 use App\Bugger;
 use Monolog\Formatter\HtmlFormatter;
+use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\AbstractProcessingHandler;
 
 class EloquentDBLogHandler extends AbstractProcessingHandler {
@@ -19,18 +20,15 @@ class EloquentDBLogHandler extends AbstractProcessingHandler {
     protected function write(array $record)
     {
         try {
-            $bugger = Bugger::create($record);
-
+            Bugger::create(array_except($record,['channel', 'context', 'datetime', 'extra']));
         }
         catch (\Exception $e) {
-            dump('An error occurred while logging an error. That\'s not good...');
+            dump($e->getMessage());
         }
-
-
     }
 
     protected function getDefaultFormatter()
     {
-        return new HtmlFormatter();
+        return new JsonFormatter();
     }
 }

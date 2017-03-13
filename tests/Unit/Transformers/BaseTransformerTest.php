@@ -34,10 +34,9 @@ abstract class BaseTransformerTest extends TestCase
     ) {
         /**
          * If class is given, prefix it with base path.
-         *  - if message is not null, separate class and message with ': '
          **/
         if ($class) {
-            $class = $message ?
+            $class = $message ? // if message is not null, separate class and message with ': '
                 base_path() . '/' . $class . ': ' :
                 base_path() . '/' . $class;
         }

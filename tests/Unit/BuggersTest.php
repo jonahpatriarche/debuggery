@@ -2,10 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Bugger;
 use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 /**

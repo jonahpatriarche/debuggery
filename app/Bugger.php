@@ -3,14 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Bugger extends Model
 {
+    use SoftDeletes;
 
     public $table = 'buggers';
-
     public $fillable = ['message', 'level', 'level_name', 'formatted'];
-    public $guarded = ['extra', 'context'];
+    public $guarded = ['extra', 'context', 'channel'];
 
     /**
      * Define the relationship between LogEntry and Bugger

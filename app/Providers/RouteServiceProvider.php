@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Bugger;
+use App\Tracker;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -25,6 +26,9 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         Route::model('bugger', Bugger::class);
+        Route::bind('tracker', function ($value) {
+            return Tracker::with('steps')->where('bugger_id', $value)->first();
+        });
 
         parent::boot();
     }
